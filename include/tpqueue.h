@@ -57,7 +57,6 @@ class TPQueue {
     TPQueue() :head(nullptr), tail(nullptr) {}
     T pop() {
         if (head == nullptr) {
-            std::cerr << "List is empty (ERROR::POP)" << std::endl;
             return T();
         }
         T* temp = head;
@@ -70,8 +69,7 @@ class TPQueue {
         } else {
             if (element.prior > this->head->prior) {
                 T* exactComponent = CreateHead(element);
-            }
-            else if (element.prior <= this->head->prior) {
+            } else if (element.prior <= this->head->prior) {
                 if (element.prior < this->head->prior &&
                     element.prior > this->tail->prior) {
                     T* exactComponent = CreateIntermediate(element);
@@ -80,6 +78,15 @@ class TPQueue {
                 }
             }
         }
+    }
+    ~TPQueue() {
+        T* tempTangent = head;
+        while (tempTangent) {
+            tempTangent = head->next;
+            delete head;
+            head = tempTangent;
+        }
+        delete tempTangent;
     }
 };
 
